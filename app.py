@@ -45,13 +45,18 @@ def get_weather():
             }), response.status_code
 
         return jsonify({
-            "version": APP_VERSION,
-            "city": data.get("name"),
-            "country": data.get("sys", {}).get("country"),
-            "temperature_c": data.get("main", {}).get("temp"),
-            "feels_like_c": data.get("main", {}).get("feels_like"),
-            "description": data.get("weather", [{}])[0].get("description"),
-            "wind_m_s": data.get("wind", {}).get("speed")
+            "api_version": "v2",
+            "message": "Контейнер автоматически обновлен через Watchtower",
+            "location": {
+                "city": data.get("name"),
+                "country": data.get("sys", {}).get("country")
+            },
+            "weather": {
+                "temperature_c": data.get("main", {}).get("temp"),
+                "feels_like_c": data.get("main", {}).get("feels_like"),
+                "description": data.get("weather", [{}])[0].get("description"),
+                "wind_m_s": data.get("wind", {}).get("speed")
+            }
         })
 
     except requests.RequestException as error:
